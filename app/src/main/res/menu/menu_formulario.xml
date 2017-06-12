@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="br.com.soledade.agenda.FormularioActivity">
+
+
+    <item android:id="@+id/menu_formulario_ok"
+        android:title="Ok"
+        android:icon="@drawable/ic_confirmar"
+        app:showAsAction="always"
+        />
+    <item android:id="@+id/menu_formulario_2"
+        android:title="item2"
+        android:icon="@drawable/ic_confirmar"
+        />
+    <item android:id="@+id/menu_formulario_3"
+        android:title="item3"
+        android:icon="@drawable/ic_confirmar"
+        />
+</menu>
