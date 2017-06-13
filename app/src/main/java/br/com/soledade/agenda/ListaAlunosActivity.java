@@ -88,15 +88,15 @@ public class ListaAlunosActivity extends AppCompatActivity {
         itemLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                /*if(ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, Manifest.permission.CALL_PHONE)
+                if(ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, android.Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED){
                         ActivityCompat.requestPermissions(ListaAlunosActivity.this,
-                                new String[]{Manifest.permission.CALL_PHONE},123);
-                }else {*/
+                                new String[]{android.Manifest.permission.CALL_PHONE},123);
+                }else {
                         Intent intentLigar = new Intent(Intent.ACTION_VIEW);
                         intentLigar.setData(Uri.parse("tel:" + aluno.getTelefone()));
                         startActivity(intentLigar);
-//                }
+                }
                 return false;
             }
         });
