@@ -1,19 +1,31 @@
 package br.com.soledade.agenda;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
 
 import br.com.soledade.agenda.dao.AlunoDAO;
 import br.com.soledade.agenda.modelo.Aluno;
 
 public class FormularioActivity extends AppCompatActivity {
 
+    public static final int CODIGO_CAMERA = 567;
     private FormularioHelper helper;
+    private String caminhoFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +33,24 @@ public class FormularioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario);
 
         helper = new FormularioHelper(this);
-        Intent intent =getIntent();
+        final Intent intent =getIntent();
         Aluno aluno =(Aluno) intent.getSerializableExtra("aluno");
         if(aluno!=null){
             helper.preencheFormulario(aluno);
         }
+        Button botaoFoto = (Button) findViewById(R.id.formulario_botao_foto);
+        botaoFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCamera =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                caminhoFoto = getExternalFilesDir(null)+ "/"+System.currentTimeMillis()+".jpg";//pasta raiz da aplicação
+                File arquivoFoto = new File(caminhoFoto);
+                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));//cria arquivo no caminho que queremos
+                startActivityForResult(intentCamera, CODIGO_CAMERA);
+            }
+        });
 
-       // Button botaoSalvar = (Button) findViewById(R.id.formulario_salvar);
+        // Button botaoSalvar = (Button) findViewById(R.id.formulario_salvar);
       //  botaoSalvar.setOnClickListener(new View.OnClickListener() {
         //    @Override
          //   public void onClick(View v) {
@@ -35,6 +58,16 @@ public class FormularioActivity extends AppCompatActivity {
          //       finish();
         //    }
        // });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==CODIGO_CAMERA){
+            ImageView foto = (ImageView) findViewById(R.id.formulario_foto);
+            Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+            Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            foto.setImageBitmap(bitmapReduzido);
+        }
     }
 
     @Override
