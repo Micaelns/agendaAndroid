@@ -1,5 +1,6 @@
 package br.com.soledade.agenda;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -62,11 +63,10 @@ public class FormularioActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==CODIGO_CAMERA){
-            ImageView foto = (ImageView) findViewById(R.id.formulario_foto);
-            Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-            Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-            foto.setImageBitmap(bitmapReduzido);
+        if(resultCode== Activity.RESULT_OK){
+            if(requestCode==CODIGO_CAMERA) {
+                helper.carregaImagem(caminhoFoto);
+            }
         }
     }
 
