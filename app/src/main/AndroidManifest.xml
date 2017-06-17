@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.soledade.agenda">
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <application
         android:debuggable="true"
         android:allowBackup="true"
@@ -18,7 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".FormularioActivity" android:label="Formulario"></activity>
-
+        <receiver android:name=".receiver.SMSReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

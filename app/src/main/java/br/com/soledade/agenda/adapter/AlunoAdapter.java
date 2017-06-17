@@ -66,7 +66,7 @@ public class AlunoAdapter extends BaseAdapter {
         ImageView campoFoto = (ImageView) view.findViewById(R.id.item_foto);
         String caminhoFoto=aluno.getCaminhoFoto();
 
-        if(caminhoFoto!="") {
+        if(caminhoFoto!=null) {
             Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
             Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
             campoFoto.setImageBitmap(bitmapReduzido);

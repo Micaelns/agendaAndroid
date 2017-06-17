@@ -19,7 +19,7 @@ import br.com.soledade.agenda.modelo.Aluno;
 public class AlunoDAO extends SQLiteOpenHelper{
 
     public AlunoDAO(Context context) {
-        super(context,"Agenda", null, 2);
+        super(context,"Agenda", null, 3);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
                 "telefone TEXT, " +
                 "site TEXT, " +
                 "nota REAL," +
-                "caminhoFoto TEXT);";
+                "caminhoFoto TEXT DEFAULT NULL);";
         db.execSQL(sql);
     }
 
@@ -42,6 +42,9 @@ public class AlunoDAO extends SQLiteOpenHelper{
             case 1:
                 sql = "ALTER TABLE Alunos ADD COLUMN caminhoFoto TEXT";
                 db.execSQL(sql);//vai para a versão 2
+            case 2:
+                sql = "ALTER TABLE Alunos ADD COLUMN caminhoFoto TEXT DEFAULT NULL";
+                db.execSQL(sql);//vai para a versão 3
         }
     }
 
@@ -102,5 +105,17 @@ public class AlunoDAO extends SQLiteOpenHelper{
 
         String[] params ={String.valueOf(aluno.getId())};
         db.update("Alunos",dados,"id=?",params);
+    }
+
+    public boolean isAluno(String telefone){
+        SQLiteDatabase db= getReadableDatabase();
+        Cursor c=db.rawQuery("select *from Alunos where telefone =?",new String[]{telefone});
+        int result=c.getCount();
+        c.close();
+        if (result > 0 ) {
+            return true;
+        }
+        else
+            return false;
     }
 }
