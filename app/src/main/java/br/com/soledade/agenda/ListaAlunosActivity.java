@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.jar.Manifest;
 
 import br.com.soledade.agenda.adapter.AlunoAdapter;
+import br.com.soledade.agenda.converter.AlunoConvert;
 import br.com.soledade.agenda.dao.AlunoDAO;
 import br.com.soledade.agenda.modelo.Aluno;
 
@@ -145,5 +147,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
         if(requestCode==123){
             //faz ligação
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_aluno,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_enviar_notas:
+                new EnviaAlunosTask(this).execute();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
